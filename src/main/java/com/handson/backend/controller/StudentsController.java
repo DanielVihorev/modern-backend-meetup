@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Optional;
 
-import com.handson.backend.Model.Student;
-import com.handson.backend.Model.StudentIn;
-import com.handson.backend.Service.StudentService;
+import com.handson.backend.model.Student;
+import com.handson.backend.model.StudentIn;
+import com.handson.backend.service.StudentService;
 
 @RestController
 @RequestMapping("/api/students")
