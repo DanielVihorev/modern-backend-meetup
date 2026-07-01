@@ -1,4 +1,4 @@
-package com.handson.backend.Model;
+package com.handson.backend.model;
 
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Max;

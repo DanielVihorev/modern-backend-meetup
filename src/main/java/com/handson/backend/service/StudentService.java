@@ -1,7 +1,7 @@
-package com.handson.backend.Service;
+package com.handson.backend.service;
 
-import com.handson.backend.Model.Student;
-import com.handson.backend.Repository.StudentRepository;
+import com.handson.backend.model.Student;
+import com.handson.backend.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
