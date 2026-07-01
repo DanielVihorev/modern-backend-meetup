@@ -1,17 +1,62 @@
 package com.handson.backend.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Optional;
+
+import com.handson.backend.Model.Student;
+import com.handson.backend.Model.StudentIn;
+import com.handson.backend.Service.StudentService;
 
 @RestController
 @RequestMapping("/api/students")
 public class StudentsController {
 
+    private final StudentService studentService;
+
+    @Autowired
+    public StudentsController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<?> hello() {
-        return new ResponseEntity<>("Hello World!", HttpStatus.OK);
+    public ResponseEntity<?> getAllStudents() {
+        return new ResponseEntity<>(studentService.all(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getOneStudent(@PathVariable Long id) {
+        return new ResponseEntity<>(studentService.findById(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public ResponseEntity<?> insertStudent(@RequestBody StudentIn studentIn) {
+        Student student = studentIn.toStudent();
+        student = studentService.save(student);
+        return new ResponseEntity<>(student, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody StudentIn student) {
+        Optional<Student> dbStudent = studentService.findById(id);
+        if (dbStudent.isEmpty()) throw new RuntimeException("Student with id: " + id + " not found");
+        student.updateStudent(dbStudent.get());
+        Student updatedStudent = studentService.save(dbStudent.get());
+        return new ResponseEntity<>(updatedStudent, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
+        Optional<Student> dbStudent = studentService.findById(id);
+        if (dbStudent.isEmpty()) throw new RuntimeException("Student with id: " + id + " not found");
+        studentService.delete(dbStudent.get());
+        return new ResponseEntity<>("DELETED", HttpStatus.OK);
     }
 }
