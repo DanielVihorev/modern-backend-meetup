@@ -1,8 +1,0 @@
-com/handson/backend/ModernBackendApplication.class
-com/handson/backend/service/StudentService.class
-com/handson/backend/model/Student.class
-com/handson/backend/repo/StudentRepository.class
-com/handson/backend/controller/StudentsController.class
-com/handson/backend/model/Student$Builder.class
-com/handson/backend/config/SwaggerConfig.class
-com/handson/backend/model/StudentIn.class
