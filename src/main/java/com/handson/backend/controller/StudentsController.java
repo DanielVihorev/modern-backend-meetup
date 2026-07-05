@@ -3,11 +3,7 @@ package com.handson.backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -19,11 +15,13 @@ import com.handson.backend.service.StudentService;
 @RequestMapping("/api/students")
 public class StudentsController {
 
-    private final StudentService studentService;
-
     @Autowired
-    public StudentsController(StudentService studentService) {
-        this.studentService = studentService;
+    StudentService studentService;
+
+    @RequestMapping(value = "/highSat", method = RequestMethod.GET)
+    public ResponseEntity<?> getHighSatStudents(@RequestParam Integer sat)
+    {
+        return new ResponseEntity<>(studentService.getStudentWithSatHigherThan(sat), HttpStatus.OK);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -40,7 +38,7 @@ public class StudentsController {
     public ResponseEntity<?> insertStudent(@RequestBody StudentIn studentIn) {
         Student student = studentIn.toStudent();
         student = studentService.save(student);
-        return new ResponseEntity<>(student, HttpStatus.OK);
+        return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

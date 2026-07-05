@@ -25,6 +25,8 @@ public class StudentIn implements Serializable {
     public StudentIn() {
     }
 
+
+
     public String getFullname() {
         return fullname;
     }
