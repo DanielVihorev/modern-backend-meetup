@@ -35,4 +35,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: danielvihorev/backend
+          tags: danielvihorev/backend:001
